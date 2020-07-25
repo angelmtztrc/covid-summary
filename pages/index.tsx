@@ -1,22 +1,34 @@
 import { GetStaticProps } from 'next';
 import tw from 'twin.macro';
 
+// Components
+import GlobalSummary from '../components/GlobalSummary';
+import { IGlobal, ICountries } from '../interfaces';
+import CountriesSummary from '../components/CountriesSummary';
+
 // Styled Components
-const Heading = tw.h2`text-2xl font-bold mb-6 text-white`;
+const Heading = tw.h1`text-2xl font-bold mb-6 text-white`;
 
 type HomeProps = {
-    data: object;
+    global: IGlobal;
+    countries: Array<ICountries>;
 }
 
-const Home = ({data}: HomeProps ) => (
+const Home = ({global, countries}: HomeProps ) => {
+    return (
     <div tw="bg-gray-900 min-h-screen relative">
         <div tw="p-8">
             <section>
+                <Heading>COVID - Global</Heading>
+                <GlobalSummary global={global} />
+            </section>
+            <section tw="mt-8">
                 <Heading>COVID - Countries</Heading>
+                <CountriesSummary countries={countries} />
             </section>
         </div>
     </div>        
-);
+)};
 
 export const getStaticProps: GetStaticProps = async () => {
 
@@ -26,7 +38,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
         props: {
-            data
+            global: data.Global,
+            countries: data.Countries
         }
     }
 }
