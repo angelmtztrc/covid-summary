@@ -1,16 +1,22 @@
 import { GetStaticProps } from 'next';
+import tw from 'twin.macro';
+
+// Styled Components
+const Heading = tw.h2`text-2xl font-bold mb-6 text-white`;
 
 type HomeProps = {
-    countries: Array<Object>;
+    data: object;
 }
 
-const Home = ({countries}: HomeProps ) => {
-    console.log(countries)
-
-    return (
-        <h1>Hello World</h1>
-    );
-}
+const Home = ({data}: HomeProps ) => (
+    <div tw="bg-gray-900 min-h-screen relative">
+        <div tw="p-8">
+            <section>
+                <Heading>COVID - Countries</Heading>
+            </section>
+        </div>
+    </div>        
+);
 
 export const getStaticProps: GetStaticProps = async () => {
 
@@ -20,7 +26,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
         props: {
-            countries: data.Countries
+            data
         }
     }
 }
